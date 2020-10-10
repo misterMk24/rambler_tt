@@ -3,7 +3,11 @@ class TopicsController < ApplicationController
   before_action :current_topic, only: %i[show update destroy]
 
   def index
-    render json: Topic.all, adapter: :json
+    @topics = Topic.all
+    filtering_params.each do |key, value|
+      @topics = @topics.public_send("filter_by_#{key}", value) if value.present?
+    end
+    render json: @topics, adapter: :json
   end
 
   def show
@@ -41,5 +45,9 @@ class TopicsController < ApplicationController
 
   def current_topic
     @topic = Topic.find(params[:id])
+  end
+
+  def filtering_params
+    params.slice(:asc, :desc, :heading, :ids, :tag)
   end
 end

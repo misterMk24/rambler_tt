@@ -1,7 +1,7 @@
 class ChangeTopic < ActiveRecord::Migration[6.0]
-  enable_extension 'hstore' unless extension_enabled?('hstore')
   def change
-    add_column :topics, :heading, :hstore
     add_column :topics, :tags, :string, array: true
+    add_column :topics, :slug, :string, unique: true
+    add_index :topics, :slug, unique: true
   end
 end

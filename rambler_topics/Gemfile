@@ -21,7 +21,8 @@ gem 'active_model_serializers'
 gem 'devise_token_auth'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
+# use Pagy for pagination
+gem 'pagy', '~> 3.5'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 

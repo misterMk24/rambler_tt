@@ -1,7 +1,3 @@
 class TopicSerializer < ActiveModel::Serializer
-  attributes :id, :title, :body, :image, :tags
-
-  # link :self do
-  #   href "https://some_link.com/topic"
-  # end
+  attributes :title, :preview, :image, :body, :link, :heading, :tags, :published_date
 end

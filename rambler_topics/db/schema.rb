@@ -25,8 +25,9 @@ ActiveRecord::Schema.define(version: 2020_10_10_142844) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "author_id"
-    t.hstore "heading"
     t.string "tags", array: true
+    t.string "slug"
+    t.index ["slug"], name: "index_topics_on_slug", unique: true
   end
 
   create_table "users", force: :cascade do |t|

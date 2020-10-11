@@ -107,6 +107,7 @@ GEM
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
+    pagy (3.8.3)
     pg (1.2.3)
     puma (4.3.6)
       nio4r (~> 2.0)
@@ -177,6 +178,7 @@ DEPENDENCIES
   byebug
   devise_token_auth
   listen (~> 3.2)
+  pagy (~> 3.5)
   pg
   puma (~> 4.1)
   rails (>= 5.2)

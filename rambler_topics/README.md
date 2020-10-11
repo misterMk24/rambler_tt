@@ -1,24 +1,78 @@
-# README
+# Test task for Rambler
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Требования по функционалу:
+- Базовые CRUD операции (создание, получение, изменение, удаление материалов)
+- Получение материала по относительной ссылке, которая может содержать “/” (например          /api/topics/относительная/ссылка.html).
+- Аутентификация по токену в заголовке или запросе (на создание, изменение и удаление)
+- Фильтрация материалов по параметрам (рубрика, тэг, список ID)
+- Сортировка материалов ASC и DESC (по дате публикации, по ID)
+- Пагинация для материалов
+- Необходимо использовать Ruby версии >= 2.6, Rails >= 5.2
+## Деплой:
+- Клонировать репозиторий;
+- Выполнить **bundle install**
+- Сконфигурировать СУБД PostgreSQL:
+  - Создать БД, поправить database.yml при необходимости.
+  - Выполнить миграцию БД: rails db:migrate
+- Запустить сервер, выполнив команду **rails s**
+## Основные действия:
+1. Просмотр списка всех материалов (**GET**):
+```http://<ip_адрес_сервера>:<port>/topics```
+Доступна следующая фильтрация:
+    1. По возрастанию/убыванию (параметра):
+```?asc=<attribute_name>```
+```?desc=<attribute_name>```
+    2. По рубрике (heading):
+```?heading[slug]=<value>&heading[title]=<value>```
+    3. По списку IDs (ids):
+```?ids=<value1,value2...>```
+    4. По списку тэгов (tags):
+```?tags=<value1,value2...>```
+2. Просмотр опеределенного материала (**GET**):
+    1. По ID:
+```http://<ip_адрес_сервера>:<port>/topics/<id>```
+    2. По составной ссылке, которая создается из атрибутов **title** и **preview**:
+```http://<ip_адрес_сервера>:<port>/topics/some/link/to/particular-param.html```
 
-Things you may want to cover:
+Перед тем, как создавать/изменять/удалять **Материал**, необходимо создать пользователя и аутентифицироваться:
+  - Ссылка на создание пользователя: http://<ip_адрес_приложения>:<port>/auth (**POST**)
+Необходимые параметры для Body:
+```
+{
+    "username" : "test",
+    "email" : "test@email.com",
+    "password" : "password",
+    "password_confirmation" : "password"
+}
+```
+- Ссылка на аутентификацию: http://<ip_адрес_приложения>:<port>/auth/sign_in (**POST**)
+Необходимые параметры для Body:
+```
+{
+    "email" : "test@email.com",
+    "password" : "password"
+}
+```
 
-* Ruby version
+3. Создание **Материала**: http://<ip_адрес_сервера>:<port>/topics (**POST**)
+    1. Headers: 
+        - access-token
+        - token-type
+        - client
+        - expiry
+        - uid
+   2. Параметры для Body:
+```
+{
+    "title" : "",
+    "preview" : "",
+    "image" : "",
+    "body" : "",
+    "tags" : ""
+}
+```
+4. Редактирование **Материала** (**PATCH**): http://<ip_адрес_сервера>:<port>/topics/<id>
+**Headers** и **Body** аналогичны методу создания.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+5. Удаление **Материала** (**DELETE**): http://<ip_адрес_сервера>:<port>/topics/<id>
+**Headers** аналогичны методу создания.
